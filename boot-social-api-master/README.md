@@ -1,13 +1,28 @@
-# Spring Social login demo
+# Springboot backend
 
-Twitter login with Spring boot and React.
-See [the blog post](http://geowarin.github.io/social-login-with-spring.html) for more information.
+# To make everything working, download backend and run
 
-## Configuration
+ - In `spring-boot-microservices` folder make `docker-compose up`
+ - See localhost:8082 (or http://127.0.0.1:8080/boot)
 
-Create a twitter app in [your twitter apps page](https://apps.twitter.com/).
 
-You can follow the steps described in [my article](http://geowarin.github.io/social-login-with-spring.html#setting-up-your-app-on-twitter)
-to do so.
+### If it's not working, may be I regenerated my API keys.
 
-Then copy and paste your `appId` and `appSecret` in the `application.properties` file.
+ - Go to `https://apps.twitter.com/app/15307872/keys`, create new app with the `website` and `callback` properties of `http://127.0.0.1:8080/app`
+ - Replace KEY and SECRET in `application.properties` and `application-dev.properties` with your new keys
+ - Restart
+
+### If still does not work, try run without microservices. From the `boot-social-api` folder make `./gradlew bootRun`
+ - See http://127.0.0.1:8080
+
+
+### If still does not work, may be I was banned in Google maps API.
+
+In this case download frontend here: NewYorkCityourtEvents_React
+
+ - in frontend folder
+ - in `static` folder of backend replace everything exept the `app` folder with the content of `build`-> `static` folder of frontend
+ - replace index.html from `app` with new `index.html`
+ - restart
+ - see http://127.0.0.1:8080
+

@@ -11,10 +11,16 @@ public class AuthUtil {
     protected static final Logger log = LoggerFactory.getLogger(AuthUtil.class);
 
     public static void authenticate(Connection<?> connection) {
+
         UserProfile userProfile = connection.fetchUserProfile();
+
         String username = userProfile.getUsername();
+
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(username, null, null);
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        log.info("User {} {} connected.", userProfile.getFirstName(), userProfile.getLastName());
+
+        log.debug("User {} {} connected.", userProfile.getFirstName(), userProfile.getLastName());
+        log.error("User {} {} NOT connected.", userProfile.getFirstName(), userProfile.getLastName());
     }
 }
