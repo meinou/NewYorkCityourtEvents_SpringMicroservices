@@ -22,6 +22,19 @@ public class Request {
     @JsonProperty("end_date")
     private String date;
 
+    @JsonProperty("start_date")
+    private String startDate;
+
+    @JsonProperty("pin")
+    private String id;
+
+    @JsonProperty("contact_name")
+    private String contactName;
+
+    @JsonProperty("contact_phone")
+    private String contactPhone;
+
+
     public Request() {
 
     }

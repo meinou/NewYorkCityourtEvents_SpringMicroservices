@@ -13,52 +13,6 @@ import org.springframework.web.client.RestTemplate;
 public class TicketController {
     private static final Logger log = LoggerFactory.getLogger(TicketController.class);
 
-//    @RequestMapping("/tickets")
-//    public String getTickets() {
-//        final String uri = "https://data.cityofnewyork.us/resource/buex-bi6w.json?category_description=Construction/Construction Services";
-//
-//        RestTemplate restTemplate = new RestTemplate();
-//        String result = restTemplate.getForObject(uri, String.class);
-//
-//        log.debug(result);
-//        return result;
-//    }
-
-//    @RequestMapping("/tickets")
-//    public String getTickets() {
-//        final String uri = "https://data.cityofnewyork.us/resource/buex-bi6w.json?category_description=Construction/Construction Services";
-//
-//        RestTemplate restTemplate = new RestTemplate();
-//        String result = restTemplate.getForObject(uri, String.class);
-//
-//        log.debug(result.toString());
-//        return result;
-//    }
-// Set<User> test = httpService.get(url).toResponseSet(User[].class);
-//    public <T> Set<T> toResponseSet(Class<T[]> setType) {
-//        HttpEntity<?> body = new HttpEntity<>(objectBody, headers);
-//        ResponseEntity<T[]> response = template.exchange(url, method, body, setType);
-//        return Sets.newHashSet(response.getBody());
-//    }
-
-
-
-//    @RequestMapping(value="/tickets", method=RequestMethod.GET)
-//    public @ResponseBody
-//    Object[] findAllObjects() {
-//        RestTemplate restTemplate = new RestTemplate();
-//        final String url = "https://data.cityofnewyork.us/resource/buex-bi6w.json?category_description=Construction/Construction Services";
-//
-//        ResponseEntity<Object[]> responseEntity = restTemplate.getForEntity(url, Object[].class);
-//        Object[] objects = responseEntity.getBody();
-//        MediaType contentType = responseEntity.getHeaders().getContentType();
-//        HttpStatus statusCode = responseEntity.getStatusCode();
-//        String result = objects.toString();
-//        log.debug(result);
-//       // List<Object> objects = new ArrayList<Object>();
-//        return objects;
-//    }
-
     @RequestMapping(value="/requests", method=RequestMethod.GET)
     public @ResponseBody
     Request[] findRequests() {
@@ -83,4 +37,31 @@ public class TicketController {
 
         return requests;
     }
+
+
+    //https://data.cityofnewyork.us/resource/buex-bi6w.json?pin=84617B0024
+    @RequestMapping(value="/requests/{id}", method=RequestMethod.GET)
+    public @ResponseBody
+    Request findRequest(@PathVariable String id) {
+        RestTemplate restTemplate = new RestTemplate();
+        final String url = "https://data.cityofnewyork.us/resource/buex-bi6w.json?pin=" + id;
+
+        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+
+        log.error(">>>> requests id");
+        log.error(response.getStatusCode().toString());
+
+        Request request = new Request();// = new Request[0];
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        log.error(response.getBody());
+        try {
+            request = objectMapper.readValue(response.getBody(), Request.class);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+
+        return request;
+    }
+
 }

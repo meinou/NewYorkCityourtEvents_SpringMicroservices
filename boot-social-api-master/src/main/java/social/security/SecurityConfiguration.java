@@ -17,10 +17,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
+
+            //    .defaultSuccessUrl("redirect:http://localhost:3000")//
+            //    .failureUrl("/login?error=true")//
                 .antMatchers("/api/session").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/tickets").permitAll()
                 .antMatchers("/api/**").authenticated()
+                .antMatchers("/requests").authenticated()
+
                 .and()
                 .headers().frameOptions().disable() // for h2
                 .and()
@@ -29,5 +34,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .and().csrf().disable();
+
+        //http.authorizeRequests().and().formLogin()
+          //      .defaultSuccessUrl("http://localhost:3000");//"redirect:http://localhost:3000")
+             //   .failureUrl("http://localhost:3000/login?error=true");
     }
 }
